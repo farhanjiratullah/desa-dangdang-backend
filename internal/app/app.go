@@ -50,6 +50,7 @@ func RunServer() {
 	// New Statistic Repository
 	statisticRepo := repository.NewStatisticRepository(db.DB)
 	postRepo := repository.NewPostRepository(db.DB)
+	profileRepo := repository.NewProfileRepository(db.DB)
 
 	// Services
 	userService := service.NewUserService(userRepo, cfg, jwt)
@@ -70,6 +71,7 @@ func RunServer() {
 	statisticService := service.NewStatisticService(statisticRepo)
 	// New Post Service
 	postService := service.NewPostService(postRepo)
+	profileService := service.NewProfileService(profileRepo)
 
 	storageAdapter := storage.NewSupabase(cfg)
 
@@ -105,6 +107,7 @@ func RunServer() {
 	// New Statistic Handler
 	handler.NewStatisticHandler(e, cfg, statisticService)
 	handler.NewPostHandler(e, cfg, postService)
+	handler.NewProfileHandler(e, cfg, profileService)
 
 	// Starting server
 	go func() {
