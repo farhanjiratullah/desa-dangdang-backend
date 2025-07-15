@@ -118,7 +118,7 @@ func (h *portofolioTestimonialRepository) FetchByIDPortofolioTestimonial(ctx con
 		Select("pd.id", "pd.thumbnail", "pd.message", "pd.client_name", "pd.role", "ps.id", "ps.name", "ps.thumbnail").
 		Joins("inner join portofolio_sections as ps on ps.id = pd.portofolio_section_id").
 		Where("pd.id =? AND pd.deleted_at IS NULL", id).
-		Order("created_at DESC").
+		Order("pd.created_at DESC").
 		Rows()
 	if err != nil {
 		log.Errorf("[REPOSITORY] FetchByIDPortofolioTestimonial - 1: %v", err)

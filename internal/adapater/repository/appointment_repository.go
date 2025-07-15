@@ -61,7 +61,7 @@ func (h *appointmentRepository) DeleteByIDAppointment(ctx context.Context, id in
 func (h *appointmentRepository) FetchAllAppointment(ctx context.Context) ([]entity.AppointmentEntity, error) {
 	rows, err := h.DB.
 		Table("appointments as a").
-		Select("a.id", "a.name", "a.email", "a.budget", "ss.name").
+		Select("a.id", "a.name", "a.email", "a.phone_number", "a.brief", "a.budget", "ss.name").
 		Joins("inner join service_sections as ss on ss.id = a.service_id").
 		Where("a.deleted_at IS NULL").
 		Rows()
@@ -73,7 +73,7 @@ func (h *appointmentRepository) FetchAllAppointment(ctx context.Context) ([]enti
 	var appointmentRepositoryEntities []entity.AppointmentEntity
 	for rows.Next() {
 		var appointment entity.AppointmentEntity
-		err = rows.Scan(&appointment.ID, &appointment.Name, &appointment.Email, &appointment.Budget, &appointment.ServiceName)
+		err = rows.Scan(&appointment.ID, &appointment.Name, &appointment.Email, &appointment.PhoneNumber, &appointment.Brief, &appointment.Budget, &appointment.ServiceName)
 		if err != nil {
 			log.Errorf("[REPOSITORY] FetchAllAppointment - 2: %v", err)
 			return nil, err
